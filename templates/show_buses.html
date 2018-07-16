@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{bus_cities_times_seats_details.0.source_city.name}} to {{bus_cities_times_seats_details.0.destination_city.name}} Show Buses</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+</head>
+<style>
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+<body>
+{% csrf_token %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+{%for details in bus_cities_times_seats_details %}
+<div class="card text-white bg-dark mb-3" style="max-width: 200rem;">
+      <div class="card-header">
+        <h6>BUS ID : {{details.bus_object.id}}</h6>
+        <h6>COMPANY : {{details.bus_object.company}}</h6>
+        <h6>TYPE : {{details.bus_object.bus_type}}</h6>
+      </div>
+        <table>
+        <th>FROM</th>
+        <th>TO</th>
+        <th>DEPARTING TIME</th>
+        <th>REACHING TIME</th>
+        <th>DATE</th>
+        <th>TOTAL SEATS</th>
+        <th>SEATS AVAILABLE</th>
+        <th>BOOK SEAT</th>
+    </tr>
+    <tr>
+        <th>{{details.source_city.name}}</th>
+        <th>{{details.destination_city.name}}</th>
+        <th>{{details.source_arrival_time}}</th>
+        <th>{{details.destination_reach_time}}</th>
+        <th>{{date_of_journey_str}}</th>
+        <th>{{details.bus_object.total_seats}}</th>
+        <th>{{details.seats_available}}</th>
+        <th><a href="{% url 'testbusapp:show_seats_of_a_bus' details.bus_object.id details.source_city.name details.destination_city.name date_of_journey_dict.day date_of_journey_dict.month date_of_journey_dict.year%}"><button class="btn btn-outline-success">BOOK</button></a></th>
+    </tr>
+    </table>
+</div>
+{% endfor %}
+</body>
+</html>

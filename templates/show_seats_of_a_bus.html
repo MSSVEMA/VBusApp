@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Seats</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+</head>
+<style>
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+<body>
+<script type="text/javascript" language="JavaScript">
+
+
+    var selected_seats="";
+    var selected_seats_count=0;
+    function select_seat(seat_id)
+    {
+        element=document.getElementById(seat_id);
+        if(selected_seats_count<5)
+        {
+            if(element.style.backgroundColor!="red")
+            {
+                if(element.style.backgroundColor=="green")
+                {
+                    element.style.backgroundColor="white";
+                    if(selected_seats_count==1)
+                        selected_seats=selected_seats.replace(seat_id,"");
+                    else
+                        {
+                            if(selected_seats.indexOf(seat_id)==0)
+                                selected_seats=selected_seats.replace(seat_id+",","");
+                            else
+                                selected_seats=selected_seats.replace(","+seat_id,"");
+                        }
+                    selected_seats_count--;
+                }
+                else
+                {
+                    if(selected_seats=="")
+                    {
+                        selected_seats=seat_id;
+                    }
+                    else
+                    {
+                        selected_seats=selected_seats+","+seat_id;
+                    }
+                    selected_seats_count++;
+                    element.style.backgroundColor="green";
+                }
+            }
+            if(selected_seats=="")
+                {
+                    document.getElementsByName("selected_seats_tag")[0].value="NO SEAT IS SELECTED";
+                    //document.getElementsByName("selected_seats_tag")[1].innerHTML="NO SEAT IS SELECTED";
+                    document.getElementById("submit_tag").type="hidden";
+                }
+            else
+                {
+                    document.getElementsByName("selected_seats_tag")[0].value=selected_seats;
+                    //document.getElementsByName("selected_seats_tag")[1].innerHTML=selected_seats;
+                    document.getElementById("submit_tag").type="submit";
+                }
+            document.getElementsByName("price_tag")[0].value=selected_seats_count*100;
+            //document.getElementsByName("price_tag")[1].innerHTML=selected_seats_count*100;
+        }
+        else
+        {
+            if(element.style.backgroundColor!="red")
+            {
+                if(element.style.backgroundColor=="green")
+                {
+                    element.style.backgroundColor="white";
+                    if(selected_seats_count==1)
+                        selected_seats=selected_seats.replace(seat_id,"");
+                    else
+                        {
+                            if(selected_seats.indexOf(seat_id)==0)
+                                selected_seats=selected_seats.replace(seat_id+",","");
+                            else
+                                selected_seats=selected_seats.replace(","+seat_id,"");
+                        }
+                    selected_seats_count--;
+                    document.getElementById("seats_limit_exceeded").style.display="none";
+                }
+                else
+                {
+                    document.getElementById("seats_limit_exceeded").style.display="block";
+                }
+            }
+        }
+    }
+</script>
+
+{% csrf_token %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+
+<div class="card text-white bg-success mb-3" style="max-width: 200rem;">
+      <div class="card-header">
+          <h6>BUS ID : {{bus_object.id}}</h6>
+        <h6>COMPANY : {{bus_object.company}}</h6>
+        <h6>TYPE : {{bus_object.bus_type}}</h6>
+      </div>
+        <table>
+        <th>FROM</th>
+        <th>TO</th>
+        <th>DEPARTING TIME</th>
+        <th>REACHING TIME</th>
+        <th>DATE</th>
+        <th>ROWS</th>
+        <th>COLUMNS</th>
+        <th>TOTAL SEATS</th>
+        <th>SEATS AVAILABLE</th>
+    </tr>
+    <tr>
+         <th style="text-transform:capitalize;">{{source_city_name}}</th>
+        <th style="text-transform:capitalize;">{{destination_city_name}}
+        <th>{{times.arrival_time}}</th>
+        <th>{{times.reach_time}}</th>
+        <th>{{date_of_journey_str}}</th>
+        <th>{{bus_object.rows}}</th>
+        <th>{{bus_object.columns}}</th>
+        <th>{{bus_object.total_seats}}</th>
+        <th>{{seats_available}}</th>
+    </tr>
+    </table>
+</div>
+<br>
+<center>
+    <div id="seats_limit_exceeded" class="alert alert-dismissible alert-danger" style="display:none;">
+        <strong>You can Select Maximum of 5 Seats at a time!!!</strong>
+    </div>
+<table width="250" height="350">
+
+    {% for seats in seats_list %}
+    <tr>
+        {% for seat_id in seats %}
+        <td>
+            {% if seat_id in seats_filled %}
+             <button style="background-color:red;border-color:black;">{{seat_id}}</button>
+            {% else %}
+             <button id="{{seat_id}}" style="background-color:white;border-color:black;" onclick="select_seat('{{seat_id}}')">{{seat_id}}</button>
+            {% endif %}
+         </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
+    <br>
+    <button style="border-color:red;background-color:red;">FILLED</button>
+    <button style="border-color:green;background-color:green;">SELECTED</button>
+    <button style="border-color:white;background-color:white;">VACANT</button>
+    <br>
+    <br>
+<form method="post" action="/seats_passengers_details/">
+    {% csrf_token %}
+    <b>SELECTED SEATS:</b><input name="selected_seats_tag" type="text" value="NO SEAT IS SELECTED" readonly/>
+    <b>PRICE:</b><input name="price_tag" type="text" value="0" readonly/>
+    <br>
+    <input type="hidden" name="bus_id" value="{{bus_object.id}}"/>
+    <input type="hidden" name="source_city_name" value="{{source_city_name}}"/>
+    <input type="hidden" name="destination_city_name" value="{{destination_city_name}}"/>
+    <input type="hidden" name="arrival_time" value="{{times.arrival_time}}"/>
+    <input type="hidden" name="reach_time" value="{{times.reach_time}}"/>
+    <input type="hidden" name="year" value="{{date_of_journey_dict.year}}"/>
+    <input type="hidden" name="month" value="{{date_of_journey_dict.month}}"/>
+    <input type="hidden" name="day" value="{{date_of_journey_dict.day}}"/>
+    <input type="hidden" name="date_of_journey_str" value="{{date_of_journey_str}}"/>
+    <br>
+    <input id="submit_tag" class="btn btn-success" type="hidden" value="Book Seats"/>
+</form>
+</center>
+</body>
+</html>

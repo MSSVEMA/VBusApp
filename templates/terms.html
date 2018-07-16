@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terms</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+<style>
+    .rounded_rectangle_div
+    {
+        max-width: 30rem;
+        border-radius:30px;
+        text-align:left;
+    }
+    .rounded_rectangle_heading_div
+    {
+        max-width: 30rem;
+        border-radius:30px;
+        text-align:middle;
+    }
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<center>
+    <div class="alert alert-dismissible alert-danger" style="max-width: 70rem; border-radius:30px;">
+        <h3>Terms</h3>
+    </div>
+
+    <div class="alert alert-dismissible alert-danger" style="max-width: 60rem; border-radius:30px;text-align:middle;">
+        <a href="#cities"><h4><u>Cities</u></h4></a>
+    </div>
+    <div class="alert alert-dismissible alert-danger" style="max-width: 50rem; border-radius:30px;text-align:middle;">
+        <a href="#signup"><h4><u>SignUp</u></h4></a>
+    </div>
+    <div class="alert alert-dismissible alert-danger" style="max-width: 40rem; border-radius:30px;text-align:middle;">
+        <a href="#login"><h4><u>Login</u></h4></a>
+    </div>
+    <div class="alert alert-dismissible alert-danger" style="max-width: 30rem; border-radius:30px;text-align:middle;">
+        <a href="#user_bookings"><h4><u>UserBookings</u></h4></a>
+    </div>
+    <div class="alert alert-dismissible alert-danger" style="max-width: 20rem; border-radius:30px;text-align:middle;">
+        <a href="#book_the_seats"><h4><u>Book the Seats</u></h4></a>
+    </div>
+    <div class="alert alert-dismissible alert-danger" style="max-width: 10rem; border-radius:30px;text-align:middle;">
+        <a href="#contact"><h4><u>Contact</u></h4></a>
+    </div>
+<br><br><br><br>
+<div id="cities" class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;float:middle;">
+  <div class="card-body">
+          <div style="max-width: 50rem; border-radius:30px;float:middle;">
+    <div class="alert alert-dismissible alert-danger rounded_rectangle_heading_div">
+        <h5>Cities</h5>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>You can see what are the <a href="/cities/"><i><u>Cities</u></i></a> that we cover.</li></strong>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="signup" class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;float:left;">
+  <div class="card-body">
+    <div style="max-width: 50rem; border-radius:30px;float:left;">
+    <div class="alert alert-dismissible alert-danger rounded_rectangle_heading_div">
+        <h5>SignUp</h5>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>Create an account through <a href="/signup/"><i><u>SignUp</u></i></a> to use the Services.</li></strong>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="login" class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;float:right;">
+  <div class="card-body">
+      <div style="max-width: 50rem; border-radius:30px;float:right;">
+    <div class="alert alert-dismissible alert-danger rounded_rectangle_heading_div">
+        <h5>Login</h5>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>You can <a href="/login/"><i><u>Login </u></i></a> if you already have an Account.</li></strong>
+    </div>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<div id="user_bookings" class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;float:middle;">
+  <div class="card-body">
+          <div style="max-width: 70rem; border-radius:30px;float:middle;">
+    <div class="alert alert-dismissible alert-danger rounded_rectangle_heading_div">
+        <h5>User Bookings</h5>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>A User can see his <a href="/user_bookings/"><i><u>Bookings</u></i></a> when Logged in.</li></strong>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>A User can see both his Previous Journeys and Upcoming Journeys.</li></strong>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>A User can only Cancel the upcoming Journey's ticket/s on certain conditions. See <a href="/cancellation_policies/"><i><u>Cancellation Policies</u></i></a> for more information. </li></strong>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="book_the_seats" class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;float:left;">
+  <div class="card-body">
+          <div style="max-width: 50rem; border-radius:30px;float:left;">
+        <div class="alert alert-dismissible alert-danger rounded_rectangle_heading_div">
+            <h5>Book the Seats</h5>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong><li>A User can <a href="/search_buses/"><i><u>Search buses</u></i></a> to select From and To.</li></strong>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong><li>A User can book maximum of 5 Seats at a time.</strong>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong><li>All the Booking Details are forwarded to the User's E-mail Address</li></strong>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong>
+                <li>
+                    The Booking Details include
+                    <ul>
+                        <li>Date of Journey</li>
+                        <li>Ticket Number</li>
+                        <li>Passengers Details</li>
+                        <li>Bus Details</li>
+                        <li>Reach & Arrival Times</li>
+                        <li>Seat Numbers</li>
+                        <li>Price</li>
+                        <li>Booking Time Stamp</li>
+                    </ul>
+                </li>
+            </strong>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;float:right;">
+  <div class="card-body">
+    <div  style="max-width: 50rem; border-radius:30px;float:right;">
+        <div class="alert alert-dismissible alert-danger rounded_rectangle_heading_div">
+            <h5>Contact</h5>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong>
+                    <ul>
+                        <br>
+                        <li><strong>Customer Service: <u>0891 - 297 -297 - 31</u></strong></li>
+                        <br>
+                        <li><strong>G-mail: <u>myemail@gmail.com</u></strong></li>
+                        <br>
+                        <li><strong>Twitter: <u>twitter username</u></strong></li>
+                        <br>
+                        <li><strong>Instagram: <u>instagram username</u></strong></li>
+                    </ul>
+            </strong>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong><li>Feedbacks are accepted and Queries will be answered 24x7.</li></strong>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong><li>We are open to Suggestions</li></strong>
+        </div>
+        <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+            <strong><li>We would love to serve you all the time.</li></strong>
+        </div>
+    </div>
+  </div>
+</div>
+</center>
+
+</body>
+</html>

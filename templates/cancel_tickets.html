@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancellation</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+<script type="text/javascript" language="JavaScript">
+
+    var selected_seats="";
+    var selected_seats_count=0;
+    function select_seat(seat_id)
+    {
+        element=document.getElementById(seat_id);
+            if(element.style.backgroundColor=="red")
+            {
+                element.style.backgroundColor="white";
+                if(selected_seats_count==1)
+                    selected_seats=selected_seats.replace(seat_id,"");
+                else
+                    {
+                        if(selected_seats.indexOf(seat_id)==0)
+                            selected_seats=selected_seats.replace(seat_id+",","");
+                        else
+                            selected_seats=selected_seats.replace(","+seat_id,"");
+                    }
+                selected_seats_count--;
+            }
+            else
+            {
+                if(selected_seats=="")
+                {
+                    selected_seats=seat_id;
+                }
+                else
+                {
+                    selected_seats=selected_seats+","+seat_id;
+                }
+                selected_seats_count++;
+                element.style.backgroundColor="red";
+            }
+        if(selected_seats=="")
+            {
+                document.getElementsByName("selected_seats_tag")[0].value="NO SEAT IS CANCELLED";
+                document.getElementById("submit_tag").type="hidden";
+            }
+        else
+            {
+                document.getElementsByName("selected_seats_tag")[0].value=selected_seats;
+                document.getElementById("submit_tag").type="submit";
+            }
+    }
+</script>
+<style>
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<center>
+    <div style="width=400;border:1px solid black;">
+        <br><br>
+        <table  class="table table-hover">
+            <tr>
+                <th>Seat ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Cancel</th>
+            </tr>
+            {% for i in booked_passengers_list %}
+            <tr>
+                <td>{{i.seat}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.age}}</td>
+                <td>{{i.gender}}</td>
+                <td><button id="{{i.seat}}" style="background:white;" onclick="select_seat('{{i.seat}}')">Cancel</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+        <form method="post" action="/cancel_tickets_confirm/">
+            {% csrf_token %}
+            <b>CANCEL SEATS : </b><input type="text" name="selected_seats_tag" value="NO SEAT IS CANCELLED" readonly/>
+            <input type="hidden" name="ticket_id" value="{{ticket_id}}"/>
+            <input type="hidden" id="submit_tag" value="Cancel"/>
+        </form>
+        <br><br>
+    </div>
+</center>
+</body>
+</html>

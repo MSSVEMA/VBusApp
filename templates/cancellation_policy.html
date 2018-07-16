@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancellation Policy</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+<style>
+    .rounded_rectangle_div
+    {
+        max-width: 70rem;
+        border-radius:30px;
+        text-align:left;
+    }
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<center>
+    <div id="user_bookings" class="card border-info mb-3" style="max-width: 80rem; border-radius:30px;float:middle;">
+  <div class="card-body">
+    <div class="alert alert-dismissible alert-danger" style="max-width: 70rem; border-radius:30px;">
+        <h3>Cancellation Policies</h3>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>If You have booked multiple tickets you can cancel all of them or some of them.</li></strong>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>You Can Cancel A Ticket/s Till an Hour to Journey.</li></strong>
+    </div>
+    <div class="alert alert-dismissible alert-info rounded_rectangle_div">
+        <strong><li>You Cannot Cancel a Ticket/s With in an hour to begin the Journey.</li></strong>
+    </div>
+  </div>
+    </div>
+
+<!--<div class="alert alert-dismissible alert-danger">-->
+  <!--<strong></strong>-->
+<!--</div>-->
+
+<!--<div class="alert alert-dismissible alert-info">-->
+  <!--<strong></strong>-->
+<!--</div>-->
+
+<!--<div class="alert alert-dismissible alert-warning">-->
+    <!--<strong></strong>-->
+<!--</div>-->
+</center>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit {{request.user}}'s Profile</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+</head>
+<style>
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+<body>
+<script type="text/javascript">
+    function validateform()
+    {
+        var username=document.forms['user_details']['username'].value;
+        var age=document.forms['user_details']['age'].value;
+        var gender_select=document.forms['user_details']['gender'];
+        var gender=gender_select.options[gender_select.selectedIndex].value;
+        var email=document.forms['user_details']['email'].value;
+        var mobile=document.forms['user_details']['mobile'].value;
+
+        if(username=="")
+            {
+                alert("Enter Valid Username");
+                return false;
+            }
+        if(age<0)
+        {
+            alert("Enter Valid Age");
+            return false;
+        }
+        if(mobile>9999999999)
+        {
+            alert("Enter Valid Mobile Number");
+            return false;
+        }
+        if(mobile<1000000000)
+        {
+            alert("Enter Valid Mobile Number");
+            return false;
+        }
+        var re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+        var x= re.test(email);
+
+        if(x==false)
+        {
+            alert("Enter Valid Email Address");
+            return false;
+        }
+        (document.getElementsByName("updated_user_profile")[0]).value=username+";"+String(age)+";"+String(gender)+";"+String(mobile)+";"+String(email);
+        return true;
+    }
+
+</script>
+{% csrf_token %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<center>
+<div class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;">
+  <div class="card-body">
+      <form name="user_details" method="post" onsubmit="return validateform()">
+          {% csrf_token %}
+      Username: <input name="username" type="text" value="{{username}}" size="40"/><br><br>
+      Age: <input name="age" type="number" min="1" max="150" value="{{age}}" style="width:250px;"/><br><br>
+      Gender: <select name="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+      </select>    <br><br>
+      Mobile: <input name="mobile" type="number" min="1000000000" max="9999999999" value="{{mobile}}" maxlength="10" style="width:280px;"/><br><br>
+      E-mail: <input name="email" type="email" value="{{email}}" size="40"/><br><br>
+      <input type="hidden" name="updated_user_profile"/>
+      <input type="submit" class="btn btn-primary btn-lg btn-block" value="Update Profile"/>
+      </form>
+  </div>
+</div>
+</center>
+</body>
+</html>

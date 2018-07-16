@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+    <title>Search Buses</title>
+<style>
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+</head>
+<script>
+    function enable_to()
+    {
+        document.getElementById("to_label_tag").style.display="initial";
+        document.getElementById("to_select_tag").style.display="initial";
+
+        var to_select_tag_element=document.getElementById("to_select_tag");
+        var to_option=to_select_tag_element.options[to_select_tag_element.selectedIndex].value;
+
+        if(to_option!="none")
+         {
+            enable_submit();
+         }
+    }
+
+    function enable_submit()
+    {
+        var from_select_tag_element=document.getElementById("from_select_tag");
+        var from_option=from_select_tag_element.options[from_select_tag_element.selectedIndex].value;
+
+        var to_select_tag_element=document.getElementById("to_select_tag");
+        var to_option=to_select_tag_element.options[to_select_tag_element.selectedIndex].value;
+
+        if(from_option!=to_option)
+            {
+                document.getElementById("search_tag").type="submit";
+                document.getElementById("swap_tag").type="button";
+                document.getElementById("select_diff_cities_tag").style.display="none";
+            }
+        else
+            {
+                document.getElementById("search_tag").type="hidden";
+                document.getElementById("swap_tag").type="hidden";
+                document.getElementById("select_diff_cities_tag").style.display="block";
+            }
+    }
+    function swap_to_and_fro()
+    {
+        var from_select_tag_element=document.getElementById("from_select_tag");
+        var from_option=from_select_tag_element.options[from_select_tag_element.selectedIndex].value;
+
+        var to_select_tag_element=document.getElementById("to_select_tag");
+        var to_option=from_select_tag_element.options[to_select_tag_element.selectedIndex].value;
+
+        var temp=from_select_tag_element.selectedIndex;
+        from_select_tag_element.selectedIndex=to_select_tag_element.selectedIndex;
+        to_select_tag_element.selectedIndex=temp;
+    }
+</script>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+
+<center>
+<div class="card border-info mb-3" style="max-width: 30rem; border-radius:30px;">
+  <div class="card-body">
+    <form method="post" form_id="post_form" action="/search_buses/">
+        {% csrf_token %}
+        <br>
+        {{date_of_journey}}
+        <br><br>
+        <label id="from_label_tag">From:</label>
+        <select id="from_select_tag" name="requested_source_city" onchange="enable_to()">
+            <option disabled selected value="none">--Select a City--</option>
+            {% for city_name in city_names %}
+            <option value="{{city_name}}">
+                {{city_name}}
+            </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label id ="to_label_tag" style="display:none;">To:</label>
+        <select id="to_select_tag" name="requested_destination_city" style="display:none;" onchange="enable_submit()">
+            <option disabled selected value="none">--Select a City--</option>
+            {% for city_name in city_names %}
+            <option value="{{city_name}}">
+                {{city_name}}
+            </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <input id="search_tag" form_id="post_form" type="hidden"  class="btn btn-success" value="Search Buses"/>
+        <input type="hidden" id="swap_tag" onclick="swap_to_and_fro()"  class="btn btn-info" value="Swap">
+        <div id="select_diff_cities_tag" class="alert alert-dismissible alert-danger" style="display:none;">
+            <strong>Please Select Different Cities</strong>
+        </div>
+        <br><br>
+    </form>
+
+  </div>
+        </div>
+    <br>
+</center>
+</body>
+</html>

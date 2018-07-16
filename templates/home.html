@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+    <title>Home</title>
+    <style>
+        body{
+            background-image:url(https://pixabay.com/get/eb30b90c2bf4023ecd1f4c00e44a4591e66ae3d01ab0124297f6c17c/auto-2583303.jpg);
+            background-size:cover;
+        }
+        .container{
+            margin-top:300px;
+            width:20%;
+        }
+        .login{
+            float:left;
+            align:center;
+        }
+        .signup{
+            float:right;
+            align:center;
+            margin-top:-40px;
+        }
+        .nav-link
+        {
+            font-size:20px;
+        }
+    </style>
+</head>
+<body style="background-image:url('https://cdn.pixabay.com/photo/2017/08/05/12/47/auto-2583303_960_720.jpg');">
+<center>
+    <u><h1 style="color:DarkMagenta;"><b style="font-size:40px;">VBus</b></h1></u>
+</center>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<center>
+<div>
+    {% if request.user.is_anonymous %}
+    <div class="container">
+    <div class="login" style="background-color:black;">
+       <a href="/login/"> <button type="button" class="btn btn-primary btn-lg btn-block">Login</button></a>
+    </div>
+    <br><br>
+    <div class="signup" style="background-color:black;">
+        <a href="/signup/"> <button type="button" class="btn btn-primary btn-lg btn-block">SignUp</button></a>
+    </div>
+    </div>
+    {% else %}
+    <br><br><br><br><br><br><br><br>
+    <h1>Welcome {{request.user}} !</h1>
+    {% endif %}
+
+</div>
+</center>
+</body>
+</html>
+<!--https://www.shutterstock.com/search?searchterm=bus&search_source=base_search_form&language=en&page=1&sort=popular&image_type=vector&safe=true&sharedid=877578496.1531075788&irgwc=1&utm_medium=Affiliate&utm_campaign=Graphic%20resources%20SL&utm_source=39422&utm_term=877578496.1531075788-->

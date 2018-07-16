@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Awaiting</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+    <style>
+        .nav-link
+        {
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+{% csrf_token %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+
+<center>
+<div width=500 style="background-color:orange;border:1px solid black;">
+    <h1>BUS DETAILS</h1>
+    <h2><label>DATE OF JOURNEY : {{date_of_journey_str}}</label></h2>
+    <h2><label>BUS ID : {{bus_object.id}}</label></h2>
+    <h2><label>COMPANY : {{bus_object.company}}</label></h2>
+    <h2><label>TYPE : {{bus_object.bus_type}}</label></h2>
+    <h2><label><u>FROM : {{source_city_name}}</u></label></h2>
+    <h2><label><u>Departure Time : {{times.arrival_time}}</u></label></h2>
+    <h2><label><u>TO : {{destination_city_name}}</u></label></h2>
+    <h2><label><u>Reaching Time : {{times.reach_time}}</u></label></h2>
+    <h2><label><u>BOOKED SEATS : {{booked_seats}}</u></label></h2>
+    <h2><label><u>Passengers : </u></label></h2>
+    {% for i in passengers_details %}
+    <h2><label>{{i.0}}</label></h2>
+    {% endfor %}
+    <h2><label><u>PRICE : {{price}}</u></label></h2>
+    <h2><label><u>Booking User : {{request.user}}</u></label></h2>
+    <h2><label><u>Email ID : {{request.user.email}}</u></label></h2>
+</div>
+<a href="/search_buses/show_seats/{{bus_object.id}}/{{source_city_name}}/{{destination_city_name}}/"><button class="btn btn-danger">Cancel</button></a>
+<form method="post" action="/payment_confirmed/">
+    {% csrf_token %}
+    <input type="hidden" name="selected_seats_tag" value="{{booked_seats}}"/>
+    <input type="hidden" name="price_tag" value="{{price}}"/>
+    <input type="hidden" name="bus_id" value="{{bus_object.id}}"/>
+    <input type="hidden" name="source_city_name" value="{{source_city_name}}"/>
+    <input type="hidden" name="destination_city_name" value="{{destination_city_name}}"/>
+    <input type="hidden" name="arrival_time" value="{{times.arrival_time}}"/>
+    <input type="hidden" name="reach_time" value="{{times.reach_time}}"/>
+    <input type="hidden" name="year" value="{{date_of_journey_dict.year}}"/>
+    <input type="hidden" name="month" value="{{date_of_journey_dict.month}}"/>
+    <input type="hidden" name="day" value="{{date_of_journey_dict.day}}"/>
+    <input type="hidden" name="date_of_journey_str" value="{{date_of_journey_str}}"/>
+    <input type="hidden" name="passengers_details_str" value="{{passengers_details_str}}"/>
+    <input type="submit" value="Confirm Booking" class="btn btn-success"/>
+</form>
+</center>
+</body>
+</html>

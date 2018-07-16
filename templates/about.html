@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+</head>
+<style>
+    .nav-link
+    {
+        font-size:20px;
+    }
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="navbar-collapse collapse show" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cities/">Cities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/terms/">Terms</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cancellation_policy/">Cancellation Policy</a>
+      </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search_buses/">Search Buses</a>
+        </li>
+        {% if request.user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup/">Sign Up</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/user_profile/">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit_profile/">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user_bookings/">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+        </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+<center>
+    <u><h1 style="color:DarkMagenta;"><b style="font-size:40px;">VBus</b></h1></u>
+<div class="card border-info mb-3" style="max-width: 70rem; border-radius:30px;">
+  <div class="card-body">
+      <img src="C:/Users/VIGNESH VEMA/testbusproject/templates/mine.JPG" width="400px" height="500px" style="float:left;">
+      <div class="card border-info mb-3" style="max-width: 40rem; border-radius:30px;">
+        <div class="card-body">
+            <div class="alert alert-dismissible alert-info" >
+                <strong style="font-size:20px;text-align:left;">
+<pre>
+    I'm Vema - The Developer of this Website VBus.
+    This is the replication of <u>AbhiBus</u>.
+
+    There are still many updations to do.
+
+    If you find any bug or any disturbance in using
+    this website please inform so that I can fix them
+    and serve you better.
+
+    You can contact me through my E-mail.
+    E-mail ID: m.vema.5298@gmail.com
+
+    The github repository link of this project is:
+    <a href=""><u>GitHub Link</u></a>
+
+    Have a Nice Day........
+</pre>
+                </strong>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+</center>
+</body>
+</html>
